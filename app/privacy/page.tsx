@@ -10,7 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { appLoginUrl } from "@/lib/site";
+import { SHARE_IMAGE, SITE_URL, appLoginUrl } from "@/lib/site";
 
 /**
  * Public privacy policy (trainera.ai/privacy). Indexable.
@@ -33,11 +33,25 @@ import { appLoginUrl } from "@/lib/site";
  *
  * Copy follows the public site rule: no dashes and no hyphenated words.
  */
+const TITLE = "Privacy policy | Trainera";
+const DESCRIPTION =
+  "How Trainera collects, uses, stores and protects personal information, including practice call recordings, and how to ask for access or make a complaint.";
+
 export const metadata: Metadata = {
-  title: "Privacy policy | Trainera",
-  description:
-    "How Trainera collects, uses, stores and protects personal information, including practice call recordings, and how to ask for access or make a complaint.",
+  title: TITLE,
+  description: DESCRIPTION,
   robots: { index: true, follow: true },
+  alternates: { canonical: `${SITE_URL}/privacy` },
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    url: `${SITE_URL}/privacy`,
+    siteName: "Trainera",
+    type: "website",
+    locale: "en_AU",
+    images: [SHARE_IMAGE],
+  },
+  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION, images: [SHARE_IMAGE.url] },
 };
 
 const LAST_UPDATED = "19 November 2026";

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Check } from "lucide-react";
 
 import { BrandMark } from "@/components/brand-mark";
-import { appLoginUrl } from "@/lib/site";
+import { SHARE_IMAGE, SITE_URL, appLoginUrl } from "@/lib/site";
 
 import { DemoForm } from "./demo-form";
 
@@ -11,10 +11,24 @@ import { DemoForm } from "./demo-form";
  * The Book a demo page. The form (demo-form.tsx) sends its answers to the
  * Trainera app, which stores them and emails the team.
  */
+const TITLE = "Book a demo | Trainera";
+const DESCRIPTION =
+  "See how Trainera assesses candidates, gets new starters ready and coaches your team with realistic AI practice calls. Tell us about your team and we'll shape the demo around it.";
+
 export const metadata: Metadata = {
-  title: "Book a demo | Trainera",
-  description:
-    "See how Trainera assesses candidates, gets new starters ready and coaches your team with realistic AI practice calls. Tell us about your team and we'll shape the demo around it.",
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: { canonical: `${SITE_URL}/book-a-demo` },
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    url: `${SITE_URL}/book-a-demo`,
+    siteName: "Trainera",
+    type: "website",
+    locale: "en_AU",
+    images: [SHARE_IMAGE],
+  },
+  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION, images: [SHARE_IMAGE.url] },
 };
 
 /** What a prospect actually gets — concrete, not marketing filler. */

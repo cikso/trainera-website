@@ -250,7 +250,7 @@ export function PremiumLandingPage({
             <div className="tp-intro-grid">
               <div className="tp-copy tp-intro-copy">
                 <h2 className="tp-intro-title">
-                  Trainera is an AI-powered training platform designed for contact centres and any team that interacts
+                  Trainera is an AI training platform designed for contact centres and any team that interacts
                   with customers.
                 </h2>
                 <p>
@@ -947,6 +947,18 @@ export function PremiumLandingPage({
                 </li>
                 <li>
                   <a href="#faq">FAQ</a>
+                </li>
+                <li>
+                  <Link href="/contact-centre-training">Contact centre training</Link>
+                </li>
+                <li>
+                  <Link href="/candidate-assessment">Candidate assessment</Link>
+                </li>
+                <li>
+                  <Link href="/training-courses">Courses from your documents</Link>
+                </li>
+                <li>
+                  <Link href="/security">Security and data</Link>
                 </li>
                 <li>
                   <Link href="/privacy">Privacy policy</Link>

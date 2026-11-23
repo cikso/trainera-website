@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 /**
  * The two addresses this website knows about.
  *
@@ -52,6 +54,21 @@ export const SHARE_IMAGE = {
  */
 export const PROFILES: string[] = [];
 
+/**
+ * The company behind Trainera, exactly as the privacy policy states it
+ * (app/privacy/page.tsx, "Who we are"). If the privacy policy's details
+ * change, change these in the same edit.
+ */
+export const COMPANY = {
+  legalName: "Agentic Intel Pty Ltd",
+  abn: "67 700 359 271",
+  streetAddress: "Level 18, 56 Pitt Street",
+  locality: "Sydney",
+  region: "NSW",
+  postcode: "2000",
+  country: "AU",
+} as const;
+
 export function organizationJsonLd(description: string) {
   return {
     "@context": "https://schema.org",
@@ -68,6 +85,17 @@ export function organizationJsonLd(description: string) {
           height: 320,
         },
         description,
+        legalName: COMPANY.legalName,
+        taxID: COMPANY.abn,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: COMPANY.streetAddress,
+          addressLocality: COMPANY.locality,
+          addressRegion: COMPANY.region,
+          postalCode: COMPANY.postcode,
+          addressCountry: COMPANY.country,
+        },
+        areaServed: "AU",
         ...(PROFILES.length ? { sameAs: PROFILES } : {}),
       },
       {
@@ -78,5 +106,29 @@ export function organizationJsonLd(description: string) {
         publisher: { "@id": `${SITE_URL}/#organization` },
       },
     ],
+  };
+}
+
+/**
+ * Search and link preview details for a reading page: title, description,
+ * its one canonical address, and the shared preview picture.
+ */
+export function pageMetadata(path: string, title: string, description: string): Metadata {
+  const url = `${SITE_URL}${path}`;
+  return {
+    title,
+    description,
+    robots: { index: true, follow: true },
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: "Trainera",
+      type: "website",
+      locale: "en_AU",
+      images: [SHARE_IMAGE],
+    },
+    twitter: { card: "summary_large_image", title, description, images: [SHARE_IMAGE.url] },
   };
 }

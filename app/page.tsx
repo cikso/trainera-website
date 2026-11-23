@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { PremiumLandingPage } from "@/components/landing/premium-page";
-import { SITE_URL, appLoginUrl } from "@/lib/site";
+import { SHARE_IMAGE, SITE_URL, appLoginUrl, organizationJsonLd } from "@/lib/site";
 
 /**
  * The home page (trainera.ai). The whole page lives in
@@ -26,9 +26,26 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: "Trainera",
     type: "website",
+    locale: "en_AU",
+    images: [SHARE_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+    images: [SHARE_IMAGE.url],
   },
 };
 
 export default function HomePage() {
-  return <PremiumLandingPage loginUrl={appLoginUrl()} />;
+  return (
+    <>
+      {/* Who we are, for search engines: the name and logo Google shows. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd(DESCRIPTION)) }}
+      />
+      <PremiumLandingPage loginUrl={appLoginUrl()} />
+    </>
+  );
 }

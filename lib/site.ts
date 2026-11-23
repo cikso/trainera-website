@@ -30,3 +30,53 @@ export function appLoginUrl(): string {
  * and emails the team; this website holds no keys or passwords of any kind.
  */
 export const DEMO_REQUEST_ENDPOINT = `${APP_URL}/api/demo-request`;
+
+/**
+ * The picture link previews show (LinkedIn, Slack, email, search results).
+ * A 1200 x 630 copy of the home page's hero banner, made from
+ * public/landing/premium/hero-agent.webp and the logo. If the hero's headline
+ * or photo changes, make a new one to match.
+ */
+export const SHARE_IMAGE = {
+  url: `${SITE_URL}/og/trainera.jpg`,
+  width: 1200,
+  height: 630,
+  alt: "Trainera: Let your team practise on AI customers before they talk to yours.",
+} as const;
+
+/**
+ * Who we are, for search engines (schema.org). Google uses this for the
+ * name and logo it shows beside the site. Add a profile address to
+ * PROFILES (LinkedIn, for example) once it exists; search engines use the
+ * list to connect those profiles to this site.
+ */
+export const PROFILES: string[] = [];
+
+export function organizationJsonLd(description: string) {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${SITE_URL}/#organization`,
+        name: "Trainera",
+        url: SITE_URL,
+        logo: {
+          "@type": "ImageObject",
+          url: `${SITE_URL}/brand/trainera-logo.png`,
+          width: 1147,
+          height: 320,
+        },
+        description,
+        ...(PROFILES.length ? { sameAs: PROFILES } : {}),
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${SITE_URL}/#website`,
+        name: "Trainera",
+        url: SITE_URL,
+        publisher: { "@id": `${SITE_URL}/#organization` },
+      },
+    ],
+  };
+}

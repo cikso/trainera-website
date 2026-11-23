@@ -1,0 +1,200 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* The Trainera colours and type, copied from the app (app.trainera.ai) so the
+   Book a demo, privacy, promo and CSIA pages look exactly like they did there.
+   The landing page itself uses its own stylesheet:
+   components/landing/premium.css.
+
+   - Warm paper canvas #FAF8F4, warm charcoal ink #23211E.
+   - Orange is rare: one main button per page. Small orange text uses #C4621D.
+   - Green / amber / red are only ever used to mean pass / warn / fail.
+   - Fonts are bundled with the site (@fontsource), never loaded from Google. */
+:root {
+  --radius: 0.625rem; /* 10px — the card radius */
+  --background: #faf8f4;
+  --foreground: #23211e;
+  --card: #ffffff;
+  --card-foreground: #23211e;
+  --popover: #ffffff;
+  --popover-foreground: #23211e;
+  --primary: #f2832b;
+  --primary-foreground: #ffffff;
+  --primary-hover: #c4621d;
+  --secondary: #f3f0e9;
+  --secondary-foreground: #23211e;
+  --muted: #f3f0e9;
+  --muted-foreground: #6b675f;
+  --accent: #fdeede;
+  --accent-foreground: #c4621d;
+  --destructive: #b3422f;
+  --destructive-foreground: #ffffff;
+  --border: #e9e5dc;
+  --input: #e9e5dc;
+  --ring: #f2832b;
+  --chart-1: #f2832b;
+  --chart-2: #00a2cc;
+  --chart-3: #c4621d;
+  --chart-4: #2e7d4f;
+  --chart-5: #6b675f;
+  --info: #00a2cc;
+  --info-foreground: #ffffff;
+  --info-dark: #007e9e;
+  --band-pass: #2e7d4f;
+  --band-pass-tint: #e8f1eb;
+  --band-warn: #c7841a;
+  --band-warn-tint: #f7eedc;
+  --band-fail: #b3422f;
+  --band-fail-tint: #f6e8e5;
+  --teal-tint: #e3f4f9;
+  /* Kit-named tint aliases (design-system kit under design/) — identical
+     values to the band/accent/secondary tokens, re-exposed under the kit's
+     vocabulary so component edits that reference --citrus-tint / --neutral-tint
+     resolve directly (incl. arbitrary Tailwind values like bg-[var(--neutral-tint)]).
+     Additive aliases, NOT copies: they track their source. NOTE the --accent
+     collision — the kit's --accent is citrus (#F2832B); OURS stays citrus-TINT
+     (#fdeede). Never redefine --accent; use --citrus-tint for the tint. */
+  --citrus-tint: var(--accent); /* #fdeede */
+  --neutral-tint: var(--secondary); /* #f3f0e9 */
+  --green-tint: var(--band-pass-tint); /* #e8f1eb */
+  --amber-tint: var(--band-warn-tint); /* #f7eedc */
+  --red-tint: var(--band-fail-tint); /* #f6e8e5 */
+  /* Motion tokens (design language §motion): 150ms hover/press · 220ms panel
+     slides · live-voice 1.2s breathe. .live-pulse keeps its inline duration
+     for back-compat; these drive new transitions + the voice orb. */
+  --dur-fast: 150ms;
+  --dur-panel: 220ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --pulse-live: 1.2s;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #23211e;
+  --sidebar-primary: #f2832b;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #fdeede;
+  --sidebar-accent-foreground: #c4621d;
+  --sidebar-border: #e9e5dc;
+  --sidebar-ring: #f2832b;
+  /* Design-doc alias names (TRAINERA_DESIGN_LANGUAGE.md §3) — same values,
+     exposed under the doc's vocabulary so live verification can resolve
+     --canvas/--ink/--citrus directly on the running app. */
+  --canvas: var(--background);
+  --surface: var(--card);
+  --ink: var(--foreground);
+  --ink-soft: var(--muted-foreground);
+  --line: var(--border);
+  --citrus: var(--primary);
+  --citrus-deep: var(--primary-hover);
+  --teal: var(--info);
+  --teal-deep: var(--info-dark);
+  --green: var(--band-pass);
+  --amber: var(--band-warn);
+  --red: var(--band-fail);
+  /* Tailwind v4 preflight types html as
+     var(--default-font-family, ui-sans-serif, …) — point it at our sans
+     stack so Inter actually applies app-wide (defining --font-sans alone
+     does NOT reach the body; verified live June 2026). */
+  --default-font-family: var(--font-sans);
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px); /* 8px — controls */
+  --radius-lg: var(--radius); /* 10px — cards */
+  --radius-xl: var(--radius); /* pinned to 10px: ONE radius language */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-info-dark: var(--info-dark);
+  --color-band-pass: var(--band-pass);
+  --color-band-pass-tint: var(--band-pass-tint);
+  --color-band-warn: var(--band-warn);
+  --color-band-warn-tint: var(--band-warn-tint);
+  --color-band-fail: var(--band-fail);
+  --color-band-fail-tint: var(--band-fail-tint);
+  --color-teal-tint: var(--teal-tint);
+  /* Kit-named tint utilities (bg-citrus-tint / bg-neutral-tint / bg-green-tint …)
+     — aliases of accent/secondary/band tints for the per-screen restyle work. */
+  --color-citrus-tint: var(--citrus-tint);
+  --color-neutral-tint: var(--neutral-tint);
+  --color-green-tint: var(--green-tint);
+  --color-amber-tint: var(--amber-tint);
+  --color-red-tint: var(--red-tint);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --font-sans: "Inter Variable", Inter, ui-sans-serif, system-ui,
+    -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Bricolage Grotesque Variable", "Bricolage Grotesque",
+    "Inter Variable", Inter, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace,
+    SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --shadow-float: 0 8px 24px rgb(35 33 30 / 0.1);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    /* Belt-and-braces with --default-font-family above: Inter is the
+       body face everywhere, regardless of preflight internals. */
+    font-family: var(--font-sans);
+    letter-spacing: -0.01em;
+  }
+  /* Lucide everywhere at the design language's 1.75px optical stroke. */
+  svg.lucide {
+    stroke-width: 1.75;
+  }
+}
+
+
+@layer utilities {
+  /* The 11px tracked section label, the one sanctioned uppercase. */
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+  /* Smooth scrolling for the landing page's menu links, and ONLY on the
+     landing page. Only the ROOT element's scroll-behavior reaches the
+     viewport, so it can't live in premium.css; it is gated on `#s-hero`,
+     the id on the landing hero. Keep that id if the hero is restructured.
+     People who ask for reduced motion keep instant jumps. */
+  @media (prefers-reduced-motion: no-preference) {
+    :root:has(#s-hero) {
+      scroll-behavior: smooth;
+    }
+  }
+}

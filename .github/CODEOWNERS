@@ -1,0 +1,6 @@
+# The privacy policy is a legal document that customer contracts point at.
+# Changes to it need the owner's approval. (This takes effect once "Require
+# review from Code Owners" is switched on for main in GitHub → Settings →
+# Branches.)
+/app/privacy/ @cikso
+/.github/ @cikso

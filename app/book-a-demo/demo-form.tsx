@@ -78,7 +78,6 @@ export function DemoForm() {
   const [teamSize, setTeamSize] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
-  const [website, setWebsite] = useState(""); // honeypot
   const [error, setError] = useState<string | null>(null);
   const [sentTo, setSentTo] = useState<string | null>(null);
   const [pending, start] = useTransition();
@@ -119,7 +118,6 @@ export function DemoForm() {
         phone,
         message,
         source: SOURCE,
-        website,
       });
       if (!res.ok) {
         setError(res.error);
@@ -157,30 +155,10 @@ export function DemoForm() {
 
   return (
     <form onSubmit={submit} className="space-y-4">
-      {/* Spam trap. Off-screen rather than display:none, because hidden inputs
-          are the first thing a bot skips; screen readers get aria-hidden.
-          Its name means nothing on purpose: a field called "website" was
-          filled in by browser autofill (Safari puts your contact card's web
-          address in), and the app then quietly dropped a real person's
-          request as spam. Autofill matches fields by their name, so a name
-          it doesn't recognise is never filled. The data-* attributes tell
-          password managers (1Password, LastPass, Bitwarden, Dashlane) to
-          leave it alone. It is still sent to the app as "website". */}
-      <input
-        type="text"
-        name="tr_hp_3k"
-        value={website}
-        onChange={(e) => setWebsite(e.target.value)}
-        tabIndex={-1}
-        autoComplete="off"
-        aria-hidden="true"
-        data-1p-ignore=""
-        data-lpignore="true"
-        data-bwignore=""
-        data-form-type="other"
-        className="absolute left-[-9999px] h-0 w-0 opacity-0"
-      />
-
+      {/* No hidden spam-trap field, on purpose. Browsers and password
+          managers filled one in (twice, under two different names), and real
+          people's requests were thrown away as spam. The app's per-address
+          limit and its checks are the spam defence. */}
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="min-w-0 space-y-1.5">
           <Label htmlFor="full_name" className="gap-1">

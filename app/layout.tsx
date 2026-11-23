@@ -17,7 +17,9 @@ export const metadata: Metadata = {
   // This is the public website, so pages are indexable unless a page says
   // otherwise (the link-shared promo and CSIA pages opt out).
   robots: { index: true, follow: true },
-  icons: { icon: "/trainera-icon.svg" },
+  // favicon.ico (app/) is for browsers that ask for it by name; the
+  // iPhone home-screen icon lives at the address iPhones look for by default.
+  icons: { icon: "/trainera-icon.svg", apple: "/apple-touch-icon.png" },
 };
 
 export default function RootLayout({

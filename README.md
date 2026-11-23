@@ -38,6 +38,7 @@ npm run build
 | CSIA program video | `/CCCE` | `app/ccce/page.tsx` |
 | CSIA welcome tour | `/CSIAvideo` | `app/csiavideo/page.tsx` |
 | Pictures and videos | | `public/` |
+| Browser tab and iPhone icons | | `app/favicon.ico`, `public/apple-touch-icon.png` (made from `public/trainera-icon.svg`) |
 | Search engine list | `/sitemap.xml` | `app/sitemap.ts` (add new public pages here) |
 
 **Any address without a page here is sent on to the app** (for example
@@ -115,3 +116,8 @@ Check every page you touched at desktop width (1440px) and phone width
 Vercel builds every pull request into a preview with its own address, and
 deploys `main` to trainera.ai when a pull request is merged. There is
 nothing to configure: the site has no secrets.
+
+`vercel.json` keeps the site's server code in Sydney (`syd1`), where the
+app runs too. Leave it in place: old links forwarded to the app (for
+example a Knowledge Hub search) carry what people typed, and our privacy
+answers say that is handled in Australia.
